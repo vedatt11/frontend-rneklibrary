@@ -1,5 +1,5 @@
 #hero-section h6 {
-    background-color: none;
+   
     padding: 250px;
     border-radius: 5px;
 }
@@ -299,4 +299,7 @@
     bottom: 0;
     right: 0;
     margin: 16px; 
+  }
+  .opak{
+    opacity: 1 !important;
   }

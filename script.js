@@ -1,35 +1,45 @@
 var top=0
 let books=[{ad:"Crime and Punishment",
 yazar:"Dostoyevski",
- adet:120.99},
+ adet:120.99,
+ tane:0},
  
  {ad:"Karamazov Kardesler",
  yazar:"Dostoyevski",
-  adet:120.33},
+  adet:120.33,
+  tane:0},
   {ad:"Sefiller",
 yazar:"Victor Hugo",
- adet:22.99},
+ adet:22.99,
+ tane:0},
   {ad:"Madame Bovary",
 yazar:"Gustave Flaubert",
- adet:67.99},
+ adet:67.99,
+ tane:0},
  {ad:"Anna Karanina",
 yazar:"Leo Tolstoy",
- adet:69.99},
+ adet:69.99,
+ tane:0},
  {ad:"Satranc ",
 yazar:"Stefan Zweig",
- adet:99.99},
+ adet:99.99,
+ tane:0},
  {ad:"1984",
 yazar:"George Orwell",
- adet:34.40},
+ adet:34.40,
+ tane:0},
  {ad:"Hayvan Çiftliği",
 yazar:"George Orwell",
- adet:22.22},
+ adet:22.22,
+ tane:0},
  {ad:"The Hound Of The Baskervilles",
 yazar:"Conan Doyle",
- adet:22.22},
+ adet:22.22,
+ tane:0},
  {ad:"Beyaz Diş",
 yazar:"Jack London",
- adet:22.22},
+ adet:22.22,
+ tane:0},
  
 ]
 var sum=0;
@@ -199,17 +209,22 @@ let arttır= ()=>{
 //     document.getElementById("sepet").appendChild(x)
   
 //  })
+
+ let ab=1;
  function createBookElement(book, imagePath) {
+  
   let x = document.createElement("div");
   x.classList.add("flex");
   x.style.borderBottom="1px solid black"
+  ab++;
+  x.id="suc"+ab;
 
   let image = document.createElement("img");
   image.style.width = "125px";
   image.style.height = "125px";
   image.style.margin = "20px";
   image.src = imagePath;
-
+  
 
   let ikincidiv = document.createElement("div");
   ikincidiv.style.padding = "20px";
@@ -219,18 +234,55 @@ let arttır= ()=>{
   
   let sa = document.createElement("p");
   sa.innerHTML = "Fiyat:" + book.adet;
+  let taneSayisi = document.createElement("span");
+  taneSayisi.innerHTML = "Tane:" +book.tane ;
+  
+  
+
+  
   let sil=document.createElement("img")
   sil.style.width = "30px";
   sil.style.height = "30px";
   sil.style.margin = "10px";
   sil.src = "images/1345874.png";
+  
   sil.addEventListener("click",function(){
+   
+   
     x.remove()
-    sayı.innerText=parseInt(sayı.innerText)-1
-    eklenenkitaplar.pop(book)
-    document.getElementById("fiyat").innerText="Fiyat:" +fiyatHesapla()
-    sum=0
+    sum=fiyatHesapla()
+    console.log(sum);
+    sayı.innerText=parseInt(sayı.innerText)-parseInt(book.tane)
+    taneSayisi.innerHTML = "Tane:" +book.tane ;
+    let tanehesapla=0
+    for(let i=0;i<book.tane;i++){
+      eklenenkitaplar.pop(book)
+      tanehesapla++;
+       
+    }
+    sum=sum-(book.adet*(book.tane))
+    book.tane=book.tane-tanehesapla;
+    console.log(eklenenkitaplar);
+    
+    if(eklenenkitaplar.length==0){
+      document.getElementById("Sepetimdekiler").innerHTML="Sepetinizde Ürün Bulunmamaktadır"
+      document.getElementById("fiyat").innerText="Ürün yok"
+    }
+    if(!(eklenenkitaplar.length==0)){
+      document.getElementById("Sepetimdekiler").innerHTML="Sepetimdekiler"
+      document.getElementById("fiyat").innerText="Fiyat:" +sum
 
+    }
+     
+   
+    console.log("book.adet"+book.adet);
+    console.log("book.tane"+book.tane);
+    
+    sum=0;
+    
+    console.log(eklenenkitaplar);
+    
+  console.log("son sum "+sum);
   })
   ucuncudiv.appendChild(sil)
 
@@ -239,50 +291,118 @@ let arttır= ()=>{
 
   ikincidiv.appendChild(para);
   ucuncudiv.appendChild(sa)
+  ucuncudiv.appendChild(taneSayisi)
+
   x.appendChild(image);
   x.appendChild(ikincidiv);
   x.appendChild(ucuncudiv);
-  eklenenkitaplar.push(book)
   
 
   return x;
 }
+let adetSayısı=1;
 function addBookToCart(bookIndex, imagePath) {
+
   let book = books[bookIndex];
   let bookElement = createBookElement(book, imagePath);
-  document.getElementById("sepet").appendChild(bookElement);
-}
+
+ 
+  let filteredbooks = eklenenkitaplar.filter(function (eleman) {
+    return eleman.ad==book.ad; 
+});
+
+console.log(filteredbooks);
+console.log(eklenenkitaplar);
+   if((filteredbooks.length==0)){
+    document.getElementById("sepet").appendChild(bookElement);
+    eklenenkitaplar.push(book)
+    
+    
+
+  }
+ else{
+    let ac=ab-1
+    document.getElementById("suc"+ac).remove();
+    document.getElementById("sepet").appendChild(bookElement);
+    eklenenkitaplar.push(book)
+
+
+
+
+
+ }
+
+ 
+
+
+ 
+  // eklenenkitaplar.forEach(function(eleman){
+  //   if(!(eleman.ad==book.ad)){
+        
+  //        ;
+  //   }
+  //   else{
+  //       console.log("aynı kitap");
+  //   }
+
+  // })
+  
+  }
+
+   
+
+
+
 document.getElementById("suc").addEventListener("click", function () {
+  books[0].tane++;
   addBookToCart(0, "images/crime.jpg");
+  
+  
 });
 
 document.getElementById("karam").addEventListener("click", function () {
+  books[1].tane++;
   addBookToCart(1, "images/kramozov.jpg");
+  
 });
 
 document.getElementById("Sefil").addEventListener("click", function () {
+  books[2].tane++;
   addBookToCart(2, "images/sefil.jpg");
+ 
 });
 
 document.getElementById("Madam").addEventListener("click", function () {
+  books[3].tane++;
   addBookToCart(3, "images/madame.jpg");
-});
+  
+}); 
 document.getElementById("Anna").addEventListener("click", function () {
+  books[4].tane++;
   addBookToCart(4, "images/anna.jpg");
+  
 });
 document.getElementById("Satranc").addEventListener("click", function () {
+  books[5].tane++;
   addBookToCart(5, "images/satranc.jpg");
+ 
 });
 document.getElementById("1984").addEventListener("click", function () {
+  books[6].tane++;
   addBookToCart(6, "images/1984.jpg");
 });
 document.getElementById("hayvan").addEventListener("click", function () {
+  books[7].tane++;
   addBookToCart(7, "images/hayvan-ciftligi.jpg");
+  
 });
 document.getElementById("basker").addEventListener("click", function () {
+  books[8].tane++;
   addBookToCart(8, "images/baskerville.jpg");
+
 });
 document.getElementById("beyaz").addEventListener("click", function () {
+  books[9].tane++;
   addBookToCart(9, "images/beyaz-dis.jpg");
 });
 let sep=document.getElementById("sepet")
@@ -317,17 +437,23 @@ window.addEventListener("DOMContentLoaded", function(){
 function fiyatHesapla(){
  
   eklenenkitaplar.forEach(function(eleman){
-    sum=(eleman.adet) +sum
+    sum=eleman.adet +sum
     sum = parseFloat(sum.toFixed(4));
+    
     
   })
   return sum
 }
-document.getElementById("fiyat").innerText="Fiyat:" +sum
 
 document.getElementById("off").addEventListener("click",function(){
   document.getElementById("fiyat").innerText="Fiyat:" +fiyatHesapla()
   sum=0
+  if(eklenenkitaplar.length==0){
+    document.getElementById("Sepetimdekiler").innerHTML="Sepetinizde Ürün Bulunmamaktadır"
+  }
+  if(!(eklenenkitaplar.length==0)){
+    document.getElementById("Sepetimdekiler").innerHTML="Sepetimdekiler"
+  }
 })
 
 function cagır(){
