@@ -151,7 +151,6 @@ let arttır= ()=>{
   top++
   
   sayı.innerText=parseInt(sayı.innerText)+1
-  alert("Kitabınız Sepete Eklendi")
    
 
 }
@@ -212,7 +211,8 @@ let arttır= ()=>{
 
  let ab=1;
  function createBookElement(book, imagePath) {
-  
+  alert(book.yazar+" "+book.ad+" Sepetinize  Eklendi")
+
   let x = document.createElement("div");
   x.classList.add("flex");
   x.style.borderBottom="1px solid black"
@@ -231,13 +231,51 @@ let arttır= ()=>{
 
   let ucuncudiv = document.createElement("div");
   ucuncudiv.style.padding = "20px";
-  
+  let eksi=document.createElement("button");
+  eksi.style.border="1px solid black";
+  eksi.style.borderRadius="20%"
+  eksi.innerText="-";
+  eksi.id = "ve" + ab;
   let sa = document.createElement("p");
   sa.innerHTML = "Fiyat:" + book.adet;
   let taneSayisi = document.createElement("span");
-  taneSayisi.innerHTML = "Tane:" +book.tane ;
-  
-  
+  taneSayisi.innerHTML =  +book.tane ;
+  let artı=document.createElement("button");
+  artı.style.border="1px solid black";
+  artı.style.borderRadius="20%"
+  artı.innerText="+";
+  artı.id = "ve" + ab;
+
+  artı.addEventListener("click", function () {
+    eklenenkitaplar.push(book)
+    book.tane++
+    sum=fiyatHesapla();
+    sayı.innerText=parseInt(sayı.innerText)+1
+    taneSayisi.innerHTML = book.tane ;
+    document.getElementById("fiyat").innerText="Fiyat:" +sum
+    sum=0;
+    
+  });
+  eksi.addEventListener("click", function () {
+    if(book.tane>0){
+    eklenenkitaplar.pop(book)
+    book.tane--
+    sum=fiyatHesapla();
+    sayı.innerText=parseInt(sayı.innerText)-1
+    taneSayisi.innerHTML = book.tane ;
+    document.getElementById("fiyat").innerText="Fiyat:" +sum
+    sum=0;
+    }
+    if(book.tane==0){
+      x.remove()
+      if(eklenenkitaplar.length==0){
+        document.getElementById("Sepetimdekiler").innerHTML="Sepetinizde Ürün Bulunmamaktadır"
+        document.getElementById("fiyat").innerText="Ürün yok"
+      }
+    }
+    
+    
+  });
 
   
   let sil=document.createElement("img")
@@ -245,6 +283,10 @@ let arttır= ()=>{
   sil.style.height = "30px";
   sil.style.margin = "10px";
   sil.src = "images/1345874.png";
+
+  
+   
+ 
   
   sil.addEventListener("click",function(){
    
@@ -253,7 +295,7 @@ let arttır= ()=>{
     sum=fiyatHesapla()
     console.log(sum);
     sayı.innerText=parseInt(sayı.innerText)-parseInt(book.tane)
-    taneSayisi.innerHTML = "Tane:" +book.tane ;
+    taneSayisi.innerHTML = book.tane ;
     let tanehesapla=0
     for(let i=0;i<book.tane;i++){
       eklenenkitaplar.pop(book)
@@ -291,7 +333,9 @@ let arttır= ()=>{
 
   ikincidiv.appendChild(para);
   ucuncudiv.appendChild(sa)
+  ucuncudiv.appendChild(eksi)
   ucuncudiv.appendChild(taneSayisi)
+  ucuncudiv.appendChild(artı)
 
   x.appendChild(image);
   x.appendChild(ikincidiv);
