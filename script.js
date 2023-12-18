@@ -391,6 +391,7 @@ function addBookToCart(bookIndex, imagePath) {
   if (filteredbooks.length == 0) {
     document.getElementById("sepet").appendChild(bookElement);
     eklenenkitaplar.push(book);
+    localStorage.setItem("sum", JSON.stringify(sum));
   } else {
     let ac = ab - 1;
     document.getElementById("suc" + ac).remove();
@@ -492,6 +493,8 @@ function fiyatHesapla() {
 
 document.getElementById("off").addEventListener("click", function () {
   document.getElementById("fiyat").innerText = "Fiyat:" + fiyatHesapla();
+  localStorage.setItem("sum", JSON.stringify(sum));
+
   sum = 0;
   if (eklenenkitaplar.length == 0) {
     document.getElementById("Sepetimdekiler").innerHTML =
