@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="pay.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 id="a">Ödenecek Tutar:</h1>
+      <form id="payment-form">
+        <label for="card-owner">Kredi Kartı Sahibinin Adı Soyadı:</label>
+        <input
+          type="text"
+          id="card-number"
+          placeholder="Name Surname"
+          autocomplete="on"
+          required
+        />
+        <label for="card-number">Kredi Kartı Numarası:</label>
+        <input
+          type="number"
+          id="card"
+          placeholder="1234 5678 9012 3456"
+          autocomplete="off"
+          required
+        />
+
+        <label for="expiry-date">Son Kullanma Tarihi:</label>
+        <input
+          type="text"
+          id="expiry-date"
+          placeholder="MM/YY"
+          autocomplete="off"
+          required
+        />
+
+        <label for="cvv">CVV:</label>
+        <input
+          type="number"
+          id="cvv"
+          placeholder="123"
+          autocomplete="off"
+          required
+        />
+
+        <button type="button" id="submit-button" onclick="validatePayment()">
+          Ödeme Yap
+        </button>
+      </form>
+    </div>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        // localStorage'dan "sum" değerini al
+        var sumFromLocalStorage = localStorage.getItem("sum");
+
+        // "sum" değeri null değilse, p elementine ata
+        if (sumFromLocalStorage !== null) {
+          document.getElementById("a").innerText += sumFromLocalStorage;
+        }
+        validatePayment = () => {
+          alert("Ödeme Başarılı!");
+        };
+      });
+    </script>
+  </body>
+</html>
